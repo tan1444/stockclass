@@ -1,28 +1,40 @@
 import { controller, get, post, provide, inject, config } from 'midway';
 import * as _ from 'lodash';
 
+/**
+ * @controller aliVod 阿里云视频接口
+ */
 @provide()
 @controller('/api/aliVod/', { middleware: ['errorHandlerMiddleware', 'checkTokenMiddleware'] })
-export class AliVodController {
+export default class AliVodController {
     @inject('aliVodHelper')
     aliVodHelper;
 
     @config('aliSdk')
     aliSdkConfig;
 
+
     /**
-     * 获取阿里ID
-     * @param ctx 
-     */
+    * @summary 获取阿里ID
+    * @description 获取阿里ID
+    * @router get /api/aliVod/getAliId    
+    * @apikey 
+    */
     @get('/getAliId')
     async getAliId(ctx) {
         ctx.body = ctx.helper.success(this.aliSdkConfig.aliId);
     }
 
+
     /**
-     * 获取阿里直播地址
-     * @param ctx 
-     */
+    * @summary 获取阿里直播地址
+    * @description 获取阿里直播地址
+    * @router get /api/aliVod/getLiveVodUrl    
+    * @request query string duration 持续时间
+    * @request query string appName 任意字符串
+    * @request query string streamName 任意字符串
+    * @apikey 
+    */
     @get('/getLiveVodUrl')
     async getLiveVodUrl(ctx) {
         let duration = ctx.query.duration;

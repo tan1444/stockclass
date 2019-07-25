@@ -112,9 +112,26 @@ export = (appInfo: any) => {
       description: 'example for swaggerdoc',
       version: '1.0.0',
     },
-    schemes: ['http'],
+    securityDefinitions: {
+      apikey: {
+        type: 'apiKey',
+        name: 'token',
+        in: 'header',
+      },
+      // oauth2: {
+      //   type: 'oauth2',
+      //   tokenUrl: 'http://petstore.swagger.io/oauth/dialog',
+      //   flow: 'password',
+      //   scopes: {
+      //     'write:access_token': 'write access_token',
+      //     'read:access_token': 'read access_token',
+      //   },
+      // },
+    },
+    schemes: ['http', 'https'],
     enable: true,
-    routerMap: true,
+    enableSecurity: true,
+    routerMap: false,
   };
 
   return config;

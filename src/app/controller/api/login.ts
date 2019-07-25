@@ -2,11 +2,11 @@ import { controller, post, provide, inject, plugin, config } from 'midway';
 import * as _ from 'lodash';
 import * as md5 from 'md5-node';
 
-@provide()
-@controller('/api/login/', { middleware: ['errorHandlerMiddleware'] })
 /**
  * @controller login 登录接口
  */
+@provide()
+@controller('/api/login/', { middleware: ['errorHandlerMiddleware'] })
 export default class LoginController {
     @inject('userService')
     userService;
@@ -71,6 +71,12 @@ export default class LoginController {
         }
     }
 
+    /**
+    * @summary 用户登出
+    * @description 用户登出
+    * @router post /api/login/doLogOut
+    * @request body logOutRequest *body    
+    */
     @post('/doLogOut')
     async doLogOut(ctx) {
         let token = ctx.header.token;
