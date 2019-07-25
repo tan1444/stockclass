@@ -1,0 +1,119 @@
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox rounded">
+                <div class="ibox-title">
+                    <h5>
+                        <%-pageTitle%>
+                    </h5>
+                </div>
+                <div class="ibox-content">
+                    <form id="operForm">
+                        <input id="opertype" type="hidden" value="<%-opertype%>">
+                        <input id="id" name="id" type="hidden" value="">
+                        <div class="form-group row">
+                            <label class="col-lg-1 col-form-label">根结点</label>
+                            <div class="col-lg-2">
+                                <select id="parentid" class="form-control" name="parentid">                                 
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-1 col-form-label">操作名称</label>
+                            <div class="col-lg-2">
+                                <input id="name" name="name" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-1 col-form-label">操作编码</label>
+                            <div class="col-lg-2">
+                                <input id="code" name="code" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-1 col-form-label">拦截前缀</label>
+                            <div class="col-lg-3">
+                                <input id="url" name="url" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-lg-1 col-form-label"></label>
+                            <div class="col-lg-2">
+                                <button id="btn-save" class="btn btn-primary" type="button">保存</button>
+                                <button id="btn-cancel" class="btn btn-warning" type="button">取消</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function() {
+        setRootOperation();
+        initPage();
+
+        $('#btn-save').click(function() {
+            doSubmit();
+        });
+
+        $('#btn-cancel').click(function() {
+            window.location.href = '/system/operation/operationlist';
+        });
+    });
+
+    //设置根菜单下拉框
+    function setRootOperation() {
+        $('#parentid').bindSelect0({
+            id: "id",
+            text: "name",
+            url: "/api/operation/getRootOperation",
+        })
+    }
+
+    //初始化页面
+    function initPage() {
+        var id = $.request('id');
+        if (id == '') return;
+        $.get('/api/operation/getOperation', {
+            id: id
+        }, function(data) {
+            if (data.status == 200) {
+                $('#operForm').formSerialize(data.res);
+            } else {
+                layer.msg(data.error);
+                console.log(data.error);
+            }
+        });
+    }
+
+    //保存
+    function doSubmit() {
+        var opertype = $('#opertype').val();
+        var url = '';
+        if (opertype == 'create') {
+            url = '/api/operation/createOperation'
+        }
+        if (opertype == 'update') {
+            url = '/api/operation/updateOperation'
+        }
+        $.ajax({
+            url: url,
+            data: $('#operForm').serialize(),
+            type: 'post',
+            success: function(data) {
+                if (data.status == 200) {
+                    layer.alert(data.res.msg, {
+                        icon: "fa-check-circle"
+                    }, function() {
+                        window.location.href = '/system/operation/operationlist';
+                    });
+                } else {
+                    layer.msg(data.error);
+                    console.log(data.error);
+                }
+            }
+        });
+    }
+</script>

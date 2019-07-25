@@ -1,0 +1,110 @@
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox rounded">
+                <div class="ibox-title">
+                    <h5>菜单管理</h5>
+                </div>
+                <div class="ibox-content">
+                    <div id="toolbar">
+                        <button id="btn-add" type="button" class="btn btn-primary"><i class="fa fa-plus"></i>新建</button>
+                    </div>
+                    <table class="table" id="contentTable" style="font-size:14px;"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var $table = $('#contentTable'),
+        $add = $('#btn-add');
+
+    $(function() {
+        initTable();
+
+        $add.click(function() {
+            window.location.href = '/system/menu/initCreate';
+        });
+    });
+
+    function initTable() {
+        $table.bootstrapTable({
+            url: '/api/menu/getAllMenu',
+            striped: true,
+            sidePagination: 'server',
+            idField: 'id',
+            showColumns: true,
+            toolbar: '#toolbar',
+            columns: [{
+                field: 'ck',
+                checkbox: true
+            }, {
+                field: 'menu_name',
+                title: '名称',
+                align: 'left',
+            }, {
+                field: 'url',
+                title: '路径',
+                align: 'center',
+            }, {
+                field: 'operate',
+                title: '操作',
+                align: 'center',
+                events: operateEvents,
+                formatter: operateFormatter
+            }],
+            treeShowField: 'menu_name',
+            parentIdField: 'parentid',
+            onPostBody: function() {
+
+                $table.treegrid({
+                    treeColumn: 1,
+                    onChange: function() {
+                        $table.bootstrapTable('resetWidth')
+                    }
+                })
+
+            }
+        })
+    }
+
+    window.operateEvents = {
+        'click .edit': function(e, value, row, index) {
+            window.location.href = '/system/menu/initUpdate?id=' + row.id;
+        },
+        'click .delete': function(e, value, row, index) {
+            $.modalConfirm("确定删除吗？", function(r) {
+                if (r) {
+                    $.ajax({
+                        url: '/api/menu/deleteMenu',
+                        data: {
+                            id: row.id
+                        },
+                        type: "post",
+                        dataType: "json",
+                        success: function(data) {
+                            if (data.status == 200) {
+                                layer.msg(data.res.msg);
+                                refreshTable();
+                            } else {
+                                layer.msg(data.error);
+                                console.log(data.error);
+                            }
+                        }
+                    });
+                }
+            });
+        }
+    };
+
+    function operateFormatter(value, row, index) {
+        var str = '';
+        str += '<a class="edit btn btn-xs btn-primary" title="编辑"><i class="fa fa-paste"></i>编辑</a>  ';
+        str += '<a class="delete btn btn-xs btn-danger" title="删除"><i class="fa fa-trash"></i>删除</a>  ';
+        return str;
+    }
+
+    function refreshTable() {
+        $table.bootstrapTable('refresh');
+    }
+</script>

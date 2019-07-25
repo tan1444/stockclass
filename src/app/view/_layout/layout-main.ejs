@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>
+        <% if(typeof(pageTitle) !== 'undefined') { %>
+            <%= pageTitle %>
+                <% } %>
+    </title>
+    <link href="/public/assets/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="/public/assets/libs/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="/public/assets/libs/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="/public/assets/libs/bootstrap-table/bootstrap-table.css" rel="stylesheet">
+    <link href="/public/assets/libs/animate/animate.css" rel="stylesheet">
+    <link href="/public/assets/libs/select2/select2.css" rel="stylesheet">
+    <link href="/public/assets/libs/webuploader/webuploader.css" rel="stylesheet">
+
+    <link href="/public/assets/libs/flatpickr/flatpickr.css" rel="stylesheet">
+    <link href="/public/assets/css/framework-ui.css" rel="stylesheet">
+    <link href="/public/assets/css/style.css" rel="stylesheet">
+
+    <script src="/public/assets/libs/jquery/jquery.js"></script>
+    <script src="/public/assets/libs/popper/popper.min.js"></script>
+    <script src="/public/assets/libs/bootstrap/js/bootstrap.js"></script>
+
+    <% if(typeof(usetree) !== 'undefined' && usetree) { %>
+        <link href="/public/assets/libs/jquery-treegrid/css/jquery.treegrid.css" rel="stylesheet">
+
+        <script src="/public/assets/libs/jquery-treegrid/js/jquery.treegrid.min.js"></script>
+        <script src="/public/assets/libs/bootstrap-table/bootstrap-table.js"></script>
+        <script src="/public/assets/libs/bootstrap-table/extensions/treegrid/bootstrap-table-treegrid.js"></script>
+        <% } else {%>
+            <script src="/public/assets/libs/bootstrap-table/bootstrap-table.js"></script>
+            <% } %>
+                <script src="/public/assets/libs/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+                <script src="/public/assets/libs/metisMenu/jquery.metisMenu.js"></script>
+                <script src="/public/assets/libs/jquery-slimScroll/jquery.slimscroll.js"></script>
+                <script src="/public/assets/libs/jquery-validate/jquery.validate.js"></script>
+                <script src="/public/assets/libs/webuploader/webuploader.js"></script>
+                <script src="/public/assets/libs/layer/layer.js"></script>
+                <script src="/public/assets/libs/select2/select2.js"></script>
+                <script src="/public/assets/libs/select2/zh-CN.js"></script>
+                <script src="/public/assets/libs/flatpickr/flatpickr.js"></script>
+                <script src="/public/assets/libs/moment/moment.js"></script>
+                <script src="/public/assets/libs/qrcode/qrcode.js"></script>
+                <script src="/public/assets/js/ajax-override.js"></script>
+                <script src="/public/assets/js/framework-ui.js"></script>
+
+                <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+                <!--[if lt IE 9]>
+      <script src="//oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="fixed-navigation pace-done fixed-sidebar fixed-nav skin-init">
+    <div id="wrapper">
+        <!--侧边栏-->
+        <%- include('../_partial/sidebar') %>
+            <div id="page-wrapper" class="gray-bg">
+                <!--顶部栏-->
+                <%- include('../_partial/header') %>
+                    <!--当前位置-->
+                    <div class="row wrapper border-bottom white-bg page-heading displayNone">
+                        <div class="col-sm-4">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="index.html">This is</a>
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    <strong>Breadcrumb</strong>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <!--内容区域-->
+                    <%- body -%>
+
+                        <div id="loadingPage" style="display: none;">
+                            <div class="loading-shade"></div>
+                            <div class="loading-content" onclick="$.loading(false)">数据加载中，请稍后…</div>
+                        </div>
+            </div>
+    </div>
+</body>
+
+</html>

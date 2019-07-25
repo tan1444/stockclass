@@ -1,0 +1,45 @@
+<%- include('../_widget/w1') %>
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox rounded">
+                    <button id="logOut">退出</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(function() {
+            getUsers();
+            $('#logOut').click(function() {
+                $.ajax({
+                    url: '/api/login/doLogOut',
+                    type: 'post',
+                    success: function(data) {
+                        if (data.status == 200) {
+                            console.log(data.res);
+                            localStorage.setItem('token', '');
+                            window.location.href = '/login';
+                        } else {
+                            layer.msg(data.error);
+                        }
+                    }
+                })
+            })
+        });
+
+        function getUsers() {
+            $.ajax({
+                url: '/api/user/getAllUser',
+                type: 'get',
+                success: function(data) {
+                    if (data.status == 200) {
+                        console.log(data.res);
+                    } else {
+                        layer.msg(data.error);
+                    }
+                }
+            })
+        }
+    </script>

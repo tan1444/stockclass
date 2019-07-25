@@ -1,0 +1,82 @@
+<script src="/public/assets/libs/aliyun-upload-sdk/lib/es6-promise.min.js"></script>
+<script src="/public/assets/libs/aliyun-upload-sdk/lib/aliyun-oss-sdk-5.3.1.min.js"></script>
+<script src="/public/assets/libs/aliyun-upload-sdk/aliyun-upload-sdk-1.5.0.min.js"></script>
+<script src="/public/assets/js/jquery.aliyun-upload.js"></script>
+
+<link rel="stylesheet" href="https://g.alicdn.com/de/prismplayer/2.8.2/skins/default/aliplayer-min.css" />
+<script charset="utf-8" type="text/javascript" src="https://g.alicdn.com/de/prismplayer/2.8.2/aliplayer-min.js"></script>
+
+<button id="btn-pay" class="btn btn-success">支付</button>
+<div id="qrcode">
+</div>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<form id="form1" action="">
+    <input type="file" name="file" id="files" multiple/>
+</form>
+<input id="authUpload" type="button" value="开始上传">
+
+<div class="prism-player" id="J_prismPlayer"></div>
+<script>
+    $(function() {
+        //支付宝支付
+        $('#btn-pay').click(function() {
+            $.ajax({
+                type: 'post',
+                url: '/api/pay/doAliPay',
+                success: function(data) {
+                    if (data.status == 200) {
+                        window.location.href = data.res;
+                        // var qrcode = new QRCode('qrcode', {
+                        //     text: data.res.alipay_trade_precreate_response.qr_code,
+                        //     width: 300,
+                        //     height: 300,
+                        //     colorDark: '#000000',
+                        //     colorLight: '#ffffff',
+                        //     correctLevel: QRCode.CorrectLevel.H
+                        // });
+                    }
+                }
+            })
+        })
+
+        //阿里视频点播上传
+        $('#files').jAliyunUpload();
+        $('#authUpload').click(function() {
+            $('#files').jAliyunUpload('startUpload');
+        });
+
+        //阿里视频点播通过凭证播放
+        // $.ajax({
+        //     type: 'get',
+        //     url: '/api/aliVod/getVideoPlayAuth',
+        //     data: {
+        //         videoId: 'e89ea9e1377f4f2794b67259d77fb678'
+        //     },
+        //     success: function(data) {
+        //         if (data.status == 200) {
+        //             var player = new Aliplayer({
+        //                 id: 'J_prismPlayer',
+        //                 width: '500px',
+        //                 height: '400px',
+        //                 autoplay: false,
+        //                 vid: data.res.VideoMeta.VideoId,
+        //                 playauth: data.res.PlayAuth,
+        //                 cover: data.res.VideoMeta.CoverURL,
+        //                 encryptType: 1
+        //             }, function(player) {
+        //                 console.log('播放器创建好了。')
+        //             });
+        //         } else {
+        //             console.log(data.error);
+        //         }
+        //     }
+        // })
+
+    });
+</script>

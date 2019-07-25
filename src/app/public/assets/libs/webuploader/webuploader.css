@@ -1,0 +1,42 @@
+.webuploader-container {
+	position: relative;
+}
+.webuploader-element-invisible {
+	position: absolute !important;
+	clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+    clip: rect(1px,1px,1px,1px);
+}
+/*
+.webuploader-pick {
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
+	background: #00b7ee;
+	padding: 10px 15px;
+	color: #fff;
+	text-align: center;
+	border-radius: 3px;
+	overflow: hidden;
+}
+.webuploader-pick-hover {
+	background: #00a2d4;
+}
+
+*/
+	.webuploader-pick-disable {
+		opacity: 0.6;
+		pointer-events:none;
+	}
+
+.queueList{float: left;}
+.queueList ul{padding:0px;margin:0px;}
+.queueList ul li{float:left;}
+.uploader .placeholder {border: 3px dashed #e6e6e6;width: 160px;min-height: 160px;padding-top: 50px;text-align: center;color: #cccccc;font-size: 14px;float: left;}
+.uploader .placeholder .webuploader-pick {font-size: 14px;background: #00b7ee;border-radius: 3px;line-height: 34px;padding: 0 10px;color: #fff;display: inline-block;cursor: pointer;box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);}
+.uploader .placeholder .webuploader-pick-hover {background: #00a2d4;}
+
+.upload-file-panel {position: absolute;background: rgba( 0, 0, 0, 0 );top:0px;z-index: 300; margin-left: 135px;}
+.upload-file-panel span {display: inline;width: 24px;height: 24px;float: right;text-indent: -9999px;overflow: hidden;background: url(/libs/webuploader/icons.png) no-repeat;margin: 5px 1px 1px;cursor: pointer;}
+.upload-file-panel span.cancel {background-position: -48px -24px;}
+.upload-file-panel span.cancel:hover {background-position: -48px 0;}
+
